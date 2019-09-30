@@ -1,5 +1,5 @@
 # CPUSQRT
 
-Benchmarks the difference between 4 implementations of square root
+Benchmarks the difference between 5 implementations of square root
 
 
