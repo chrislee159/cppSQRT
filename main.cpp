@@ -8,6 +8,7 @@ extern "C" {double fpuSQRT(double num)__attribute__((fastcall)); }
 extern "C" {double sqSQRT(double num)__attribute__((fastcall)); }
 
 double averageCPUDelay;
+
 std::chrono::duration<double> benchFPU(double num = rand()) {
 
 	auto sTime = std::chrono::high_resolution_clock::now();
@@ -28,7 +29,6 @@ std::chrono::duration<double> benchCMATH(double num) {
 
 std::chrono::duration<double> benchSQ(double num) {
 	
-
 	auto sTime = std::chrono::high_resolution_clock::now();
 	sqSQRT(num);
 	auto eTime = std::chrono::high_resolution_clock::now();
@@ -50,7 +50,6 @@ std::chrono::duration<double> benchSQINTRINSIC(double num) {
 
 std::chrono::duration<double> benchSQINLINE(double num) {
 
-	
 	auto sTime = std::chrono::high_resolution_clock::now();
 
 	asm("sqrtsd %0,%%XMM0" ::"x"(num));
@@ -88,9 +87,8 @@ void bench(unsigned long iter) {
 		<< "SQ Time: " << sqTime.count() - averageCPUDelay << std::endl
 		<< "SQ-INTRINSIC time: " << sqINTRINSICTIME.count() - averageCPUDelay << std::endl 
 		<< "SQ-Inline time: " << sqInlineTime.count() - averageCPUDelay << std::endl;
-	
-	
 }
+
 int main(int argc, char* argv[]) {
 
 	std::cout << std::fixed << "FPU benchmark" << std::endl;
@@ -99,24 +97,22 @@ int main(int argc, char* argv[]) {
     std::chrono::duration<double> baseDelay = std::chrono::duration<double>::zero();
 
     for(int i = 0; i < 200; i++){
-       auto sTime = std::chrono::high_resolution_clock::now();
+        auto sTime = std::chrono::high_resolution_clock::now();
 	
 	    auto eTime = std::chrono::high_resolution_clock::now();
 	
-	baseDelay += eTime - sTime;
-
+	    baseDelay += eTime - sTime;
     }
+
     averageCPUDelay = baseDelay.count() / 200;
-        
+    averageCPUDelay /= 200;
     
-    
-     averageCPUDelay /= 200;
     std::cout << std::fixed << "Base CPU delay is " << averageCPUDelay << std::endl;
 
 
-	for(int i = 0; i < 10; i++){
- 	bench(100000000);
-	}
+	for(int i = 0; i < 10; i++)
+ 	    bench(100000000);
+	
     std::cout << "TOTAL AVERAGE OF 100 RUNS" << std::endl
 	<< "FPU: " << lfpuTime / 10 << std::endl
 	<< "CMATH: " << lcmathTime / 10 << std::endl

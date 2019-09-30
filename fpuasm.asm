@@ -1,7 +1,3 @@
-; FPU assembly functions located here ;
-
-
-
 global  sqSQRT
 global fpuSQRT
 
@@ -17,11 +13,10 @@ fpuSQRT:
 	fsqrt
 
 	fistp QWORD [memory]
-	
+
 	mov rax, [memory]
 
 	ret
-
 
 sqSQRT:
 	sqrtsd XMM0, XMM0
