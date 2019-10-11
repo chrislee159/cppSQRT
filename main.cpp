@@ -89,7 +89,15 @@ void bench(unsigned long iter) {
 		<< "SQ-Inline time: " << sqInlineTime.count() - averageCPUDelay << std::endl;
 }
 
+#define DEFAULT_ITERATION 100000000
+
 int main(int argc, char* argv[]) {
+    unsigned long bench_iter;
+    
+    if(argc == 2)
+        bench_iter = atoi(argv[1]);
+    else
+        bench_iter = DEFAULT_ITERATION;
 
 	std::cout << std::fixed << "FPU benchmark" << std::endl;
 	unsigned long iter = 2;
@@ -111,7 +119,7 @@ int main(int argc, char* argv[]) {
 
 
 	for(int i = 0; i < 10; i++)
- 	    bench(100000000);
+ 	    bench(bench_iter);
 	
     std::cout << "TOTAL AVERAGE OF 100 RUNS" << std::endl
 	<< "FPU: " << lfpuTime / 10 << std::endl
@@ -119,5 +127,4 @@ int main(int argc, char* argv[]) {
 	<< "SQ: " << lsqTime / 10 << std::endl
 	<< "SQ INTRINSIC " << lsqIntrisicTime  / 10 << std::endl
 	<< "SQ INLINE" << lsqinlineTime / 10 << std::endl;
-	getchar();
 }

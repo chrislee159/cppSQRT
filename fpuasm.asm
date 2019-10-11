@@ -1,6 +1,8 @@
 global  sqSQRT
 global fpuSQRT
 
+DEFAULT REL
+
 section .bss
     memory: resq 1
 
